@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileStore } from "../../store/profileStore";
 import { request } from "../../util/request";
-import ErrorMessage from "../../components/ErrorMessage";
+import ErrorMessage from "../../component/ErrorMessage";
+
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -33,13 +34,13 @@ const LoginPage = () => {
 
   const handleSocialLogin = (provider) => {
     const popup = window.open(
-      `http://localhost:8000/api/auth/${provider}`,
+      `https://final-information-production.up.railway.app/api/auth/${provider}`,
       "_blank",
       "width=500,height=600"
     );
 
     const receiveMessage = (event) => {
-      if (event.origin !== "http://localhost:8000") return;
+      if (event.origin !== "https://final-information-production.up.railway.app") return;
 
       const { user, token } = event.data || {};
       if (user && token) {

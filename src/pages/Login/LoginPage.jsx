@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileStore } from "../../store/profileStore";
 import { request } from "../../util/request";
-import ErrorMessage from "../../component/ErrorMessage";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const LoginPage = () => {
   const navigate = useNavigate();

@@ -1,39 +1,26 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
-
-// import required modules
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import SlideBanner from "./SlideBanner";
-const SwiperBanner = ({ images }) => {
-  return (
-    <div>
-      <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        navigation={true}
-        modules={[Autoplay, Navigation]}
-        className="mySwiper h-[450px]"
-      >
-        {images.map((image, index) => {
-          return (
-            <SwiperSlide key={index}>
-              <SlideBanner image={image} />
-            </SwiperSlide>
-          );
-        })}
 
-       
-      </Swiper>
-    </div>
-  );
-};
+const SwiperBanner = ({ images }) => (
+  <div className="w-full" style={{ height: "60vh", position: "relative" }}>
+    <Swiper
+      spaceBetween={30}
+      centeredSlides
+      autoplay={{ delay: 2500, disableOnInteraction: false }}
+      navigation
+      modules={[Autoplay, Navigation]}
+      className="absolute top-0 left-0 w-full h-full"
+    >
+      {images.map((img, i) => (
+        <SwiperSlide key={i}>
+          <SlideBanner image={img} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+);
 
 export default SwiperBanner;

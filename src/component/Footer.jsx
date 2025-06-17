@@ -11,22 +11,22 @@ const Footer = () => {
           </div>
           <ul className="flex space-x-6 text-sm font-medium">
             <li>
-              <a href="/" className="hover:underline">
+              <a href="/" className="hover:underline hover:text-yellow-400 transition-colors duration-300">
                 Home
               </a>
             </li>
             <li>
-              <Link to="/toprated" className="hover:underline">
+              <Link to="/toprated" className="hover:underline hover:text-yellow-400 transition-colors duration-300">
                 Top rated
               </Link>
             </li>
             <li>
-              <Link to="nowplaying" className="hover:underline">
+              <Link to="nowplaying" className="hover:underline hover:text-yellow-400 transition-colors duration-300">
                 Now playing
               </Link>
             </li>
             <li>
-              <Link to="/upcoming" className="hover:underline">
+              <Link to="/upcoming" className="hover:underline hover:text-yellow-400 transition-colors duration-300">
                 Upcoming
               </Link>
             </li>

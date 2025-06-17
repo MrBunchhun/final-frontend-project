@@ -49,7 +49,7 @@ const MovieCard = ({ movie }) => {
         {/* Rating */}
         <div className="flex items-center justify-center gap-2 mt-4">
           <span className="text-yellow-500 text-sm font-medium">Rated:</span>
-          <span className="bg-yellow-300 text-black text-sm font-bold px-2.5 py-1 rounded-full w-[45px] flex justify-center items-center shadow-sm">
+          <span className="bg-yellow-400 text-black text-sm font-bold px-2.5 py-1 rounded-full w-[45px] flex justify-center items-center shadow-sm">
             {Number(movie.vote_average).toFixed(1)}
           </span>
         </div>

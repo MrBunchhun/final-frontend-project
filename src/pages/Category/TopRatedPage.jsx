@@ -62,7 +62,7 @@ const TopRatedPage = () => {
           onClick={() => fetchMovies(i)}
           className={`px-3 py-1 rounded ${
             i === pagination.current_page
-              ? "bg-red-600 text-white"
+              ? "bg-yellow-500 text-white"
               : "bg-gray-700 text-white hover:bg-gray-600"
           }`}
         >

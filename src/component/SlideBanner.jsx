@@ -20,7 +20,7 @@ const SlideBanner = ({ image }) => {
         </p>
 
         <div className="flex flex-wrap gap-4 items-center">
-          <div className="inline-flex items-center gap-2 bg-yellow-400 text-black font-semibold px-4 py-2 rounded-md">
+          <div className="inline-flex items-center gap-2 bg-yellow-500 text-black font-semibold px-4 py-2 rounded-md">
             <span>Rating:</span>
             <span>{Number(image.vote_average).toFixed(1)}</span>
           </div>

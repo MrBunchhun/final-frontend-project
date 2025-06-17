@@ -1,3 +1,6 @@
+import axios from "axios";
+import config from "./config";
+
 export const request = async (
   endpoint,
   method = "get",

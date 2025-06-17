@@ -1,37 +1,28 @@
 import axios from "axios";
 
-// Set base URL for your Laravel API
 const API = axios.create({
-  baseURL: "https://final-information-production.up.railway.app/api", // Change to match your Laravel setup
+  baseURL: "https://final-information-production.up.railway.app",
+  withCredentials: true, // needed for Sanctum cookie auth
 });
 
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`; // Attach token to Authorization header
-  }
-  return config;
-});
+// NO interceptor adding Authorization header for Sanctum
 
-// Export API instance for global usage
 export default API;
 
-// Register API call
-export const register = (data) => {
-  return API.post("/auth/register", data); // Laravel expects `auth/register` as per your controller
+export const getCsrfCookie = () => {
+  return API.get("/sanctum/csrf-cookie");
 };
 
-// Login API call
+export const register = async (data) => {
+  await getCsrfCookie();  // first get CSRF cookie
+  return API.post("/auth/register", data);
+};
+
 export const login = async (credentials) => {
-  return API.post("/auth/login", credentials); // Laravel expects `auth/login` as per your controller
+  await getCsrfCookie();  // first get CSRF cookie
+  return API.post("/auth/login", credentials);
 };
 
 export const fetchUser = async () => {
-  try {
-    const response = await API.get("/auth/user"); // Laravel's route for fetching authenticated user
-    return response.data; // Return user data
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    throw error; // Handle error
-  }
+  return API.get("/auth/user");
 };

@@ -41,7 +41,11 @@ const Navbar = () => {
         request(`search?query=${encodeURIComponent(query.trim())}`, "get")
           .then((res) => {
             const allResults = res.results || [];
-            const activeMovies = allResults.filter((movie) => movie.status === 1);
+
+            // Show message if all movies are inactive
+            const activeMovies = allResults.filter(
+              (movie) => movie.status === 1
+            );
 
             if (allResults.length > 0 && activeMovies.length === 0) {
               setMessage("This movie is not available right now.");
@@ -51,7 +55,7 @@ const Navbar = () => {
               setMessage("");
             }
 
-            setResults(activeMovies);
+            setResults(activeMovies); // only show active movies
             setShowDropdown(true);
           })
           .catch(() => {
@@ -69,39 +73,65 @@ const Navbar = () => {
   }, [query]);
 
   return (
-    <nav className="bg-black/40 backdrop-blur-md text-white shadow-md z-50 fixed w-full">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3">
-        <Link to="/" className="flex items-center space-x-2" onClick={() => handleMenuClick("/")}>
-          <img src={Logo} alt="Logo" className="h-12 w-auto" />
+    <nav className="bg-black text-white z-50 relative">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+        {/* Logo */}
+        <Link className="flex items-center space-x-2">
+          <img src={Logo} alt="Logo" className="h-16" />
         </Link>
 
-        <div className="flex md:hidden">
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white">
-            {mobileOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
-          </button>
-        </div>
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden text-white"
+          onClick={() => setMobileOpen((prev) => !prev)}
+        >
+          {mobileOpen ? (
+            <XMarkIcon className="h-6" />
+          ) : (
+            <Bars3Icon className="h-6" />
+          )}
+        </button>
 
+        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 items-center">
-          {['/', '/toprated', '/nowplaying', '/upcoming'].map((path) => (
-            <Link
-              key={path}
-              to={path}
-              className={`hover:text-yellow-400 transition ${active === path ? 'text-yellow-500' : ''}`}
-              onClick={() => handleMenuClick(path)}
-            >
-              {path === '/' ? 'Home' : path.slice(1).replace(/^(.)/, (c) => c.toUpperCase())}
-            </Link>
-          ))}
+          <Link
+            to="/"
+            className={active === "/" ? "text-yellow-500" : ""}
+            onClick={() => handleMenuClick("/")}
+          >
+            Home
+          </Link>
+          <Link
+            to="/toprated"
+            className={active === "/toprated" ? "text-yellow-500" : ""}
+            onClick={() => handleMenuClick("/toprated")}
+          >
+            Top Rated
+          </Link>
+          <Link
+            to="/nowplaying"
+            className={active === "/nowplaying" ? "text-yellow-500" : ""}
+            onClick={() => handleMenuClick("/nowplaying")}
+          >
+            Now Playing
+          </Link>
+          <Link
+            to="/upcoming"
+            className={active === "/upcoming" ? "text-yellow-500" : ""}
+            onClick={() => handleMenuClick("/upcoming")}
+          >
+            Upcoming
+          </Link>
           <div ref={dropdownRef} className="relative">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search movies..."
-              className="text-black px-3 py-1 rounded-md w-48 focus:outline-none"
+              placeholder="Search here"
+              className="text-black px-2 py-1 pr-8 rounded-md w-[150px]"
             />
             {showDropdown && results.length > 0 && (
-              <div className="absolute top-10 left-0 z-50 w-72 bg-white text-black shadow-lg rounded-md max-h-64 overflow-y-auto">
+              <div className="absolute top-10 left-0 z-50 w-[300px] bg-white text-black shadow-lg rounded-md max-h-64 overflow-y-auto">
                 {results.map((movie) => (
                   <Link
                     key={movie.id}
@@ -120,22 +150,29 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="relative ml-4">
+        {/* Profile / Login */}
+        <div className="relative">
           {user ? (
             <div className="relative">
               <button
-                onClick={() => document.getElementById("user-dropdown")?.classList.toggle("hidden")}
-                className="w-9 h-9 rounded-full overflow-hidden border border-white"
+                onClick={() =>
+                  document
+                    .getElementById("user-dropdown")
+                    ?.classList.toggle("hidden")
+                }
+                className="w-8 h-8 rounded-full overflow-hidden border"
               >
                 <img
-                  src={user.profileImage || "https://flowbite.com/docs/images/people/profile-picture-3.jpg"}
+                  src={
+                    user.profileImage ||
+                    "https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                  }
                   alt="User"
-                  className="object-cover w-full h-full"
                 />
               </button>
               <div
-                id="user-dropdown"
                 ref={userDropdownRef}
+                id="user-dropdown"
                 className="hidden absolute right-0 z-50 mt-2 w-48 bg-white text-black divide-y rounded-lg shadow"
               >
                 <div className="px-4 py-3">
@@ -157,12 +194,15 @@ const Navbar = () => {
                     >
                       Favorites
                     </button>
-                    <FavoriteModal isOpen={showFavorites} onClose={() => setShowFavorites(false)} />
+                    <FavoriteModal
+                      isOpen={showFavorites}
+                      onClose={() => setShowFavorites(false)}
+                    />
                   </li>
                   <li>
                     <button
                       onClick={() => setShowAlert(true)}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-500"
+                      className="block w-full text-left px-4 py-2 text-sm"
                     >
                       Sign out
                     </button>
@@ -171,36 +211,75 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <Link to="/login" className="py-2 px-4 bg-yellow-500 text-black rounded-md hover:bg-yellow-600">
+            <Link
+              to="/login"
+              className="py-2 px-4 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+            >
               Login
             </Link>
           )}
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden px-6 py-4 bg-black/90 backdrop-blur-md space-y-3">
-          {['/', '/toprated', '/nowplaying', '/upcoming'].map((path) => (
-            <Link
-              key={path}
-              to={path}
-              onClick={() => handleMenuClick(path)}
-              className="block text-white hover:text-yellow-500"
-            >
-              {path === '/' ? 'Home' : path.slice(1).replace(/^(.)/, (c) => c.toUpperCase())}
-            </Link>
-          ))}
-          <div className="relative">
+        <div className="md:hidden absolute top-full right-0 w-full bg-[#1c1c1c] text-white px-6 py-4 z-40 shadow-lg">
+          <ul className="space-y-3 text-base">
+            <li>
+              <Link
+                to="/"
+                onClick={() => handleMenuClick("/")}
+                className="block text-white hover:text-yellow-500 transition"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/toprated"
+                onClick={() => handleMenuClick("/toprated")}
+                className="block text-white hover:text-yellow-500 transition"
+              >
+                Popular
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/nowplaying"
+                onClick={() => handleMenuClick("/nowplaying")}
+                className="block text-white hover:text-yellow-500 transition"
+              >
+                Now Playing
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/upcoming"
+                onClick={() => handleMenuClick("/upcoming")}
+                className="block text-white hover:text-yellow-500 transition"
+              >
+                Upcoming
+              </Link>
+            </li>
+          </ul>
+
+          {/* Search input */}
+          <div className="mt-4">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search..."
-              className="w-full px-4 py-2 text-black rounded-md"
+              className="w-full px-4 py-2 text-black rounded-md focus:outline-none"
             />
             {showDropdown && (
-              <div className="absolute top-full left-0 z-50 w-full bg-white text-black shadow-lg rounded-md max-h-64 overflow-y-auto mt-2">
-                {message && <div className="px-4 py-2 text-yellow-600 text-sm border-b">{message}</div>}
+              <div className="absolute top-10 left-0 z-50 w-[300px] bg-white text-black shadow-lg rounded-md max-h-64 overflow-y-auto">
+                {message && (
+                  <div className="px-4 py-2 text-yellow-600 font-medium text-sm border-b">
+                    {message}
+                  </div>
+                )}
+
                 {results.map((movie) => (
                   <Link
                     key={movie.id}
@@ -220,8 +299,12 @@ const Navbar = () => {
         </div>
       )}
 
+      {/* Logout Confirmation */}
       {showAlert && (
-        <ConfirmAlert onConfirm={handleLogout} onCancel={() => setShowAlert(false)} />
+        <ConfirmAlert
+          onConfirm={handleLogout}
+          onCancel={() => setShowAlert(false)}
+        />
       )}
     </nav>
   );

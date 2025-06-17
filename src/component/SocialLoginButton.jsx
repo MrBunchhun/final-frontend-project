@@ -1,6 +1,6 @@
 export const SocialLoginButton = ({ provider, label, bgColor, textColor }) => {
   const handleSocialLogin = () => {
-    const url = `http://localhost:8000/api/auth/${provider}`;
+    const url = `https://final-information-production.up.railway.app/api/auth/${provider}`;
     const win = window.open(url, "_blank", "width=500,height=600");
 
     const timer = setInterval(() => {

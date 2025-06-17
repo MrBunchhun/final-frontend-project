@@ -16,7 +16,7 @@ const SearchPage = () => {
 
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/search?query=${query}`
+          `https://final-information-production.up.railway.app/api/search?query=${query}`
         );
         setResults(res.data.results);
       } catch (err) {

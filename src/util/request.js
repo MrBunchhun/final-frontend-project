@@ -1,6 +1,3 @@
-import axios from "axios";
-import config from "./config";
-
 export const request = async (
   endpoint,
   method = "get",
@@ -8,8 +5,6 @@ export const request = async (
   headers = {}
 ) => {
   const url = `${config.BASE_URL}${endpoint}`;
-
-  // Get token from localStorage (or from Zustand if you want)
   const token = localStorage.getItem("token");
 
   try {
@@ -20,13 +15,19 @@ export const request = async (
       headers: {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...headers, 
+        ...headers,
       },
     });
 
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
-    throw error.response?.data || { error: "Something went wrong" };
+
+    const errData = error.response?.data;
+
+    throw {
+      message: errData?.message || "Something went wrong",
+      errors: errData?.errors || null,
+    };
   }
 };

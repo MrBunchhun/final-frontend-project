@@ -1,63 +1,53 @@
 import { useNavigate } from "react-router-dom";
-import { movieStore } from "../store/movieStore"; // Adjust path as needed
+import { movieStore } from "../store/movieStore"; // adjust path if needed
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
   const setCurrentMovie = movieStore((state) => state.setCurrentMovie);
+
+  const calculateFontSize = (title) => {
+    if (title.length > 25) return "text-[20px]";
+    if (title.length > 15) return "text-[25px]";
+    return "text-[30px]";
+  };
 
   const handleClick = () => {
     setCurrentMovie(movie);
     navigate(`/movie/${movie.tmdb_id}`);
   };
 
-  const fontSize = () => {
-    const length = movie.title.length;
-    if (length > 25) return "text-[18px]";
-    if (length > 15) return "text-[24px]";
-    return "text-[28px]";
-  };
-
-  const imageSrc = movie.poster_path
-    ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
-    : "/placeholder.jpg"; // Replace with your default image
-
   return (
     <div
-      role="button"
       onClick={handleClick}
-      aria-label={`Open movie ${movie.title}`}
-      className="w-full h-[550px] rounded-2xl shadow-md bg-[#1a1a1a] flex flex-col justify-between overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 group"
+      className="w-full h-[550px] rounded-lg shadow bg-[#131313] flex flex-col justify-between overflow-hidden cursor-pointer hover:shadow-lg transition duration-300"
     >
-      {/* Image */}
-      <div className="overflow-hidden h-[350px] w-full">
-        <img
-          src={imageSrc}
-          alt={movie.title}
-          className="h-full w-full object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
-        />
-      </div>
+      {/* Movie Image */}
+      <img
+        className="rounded-t-lg h-[350px] w-full object-cover"
+        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+        alt={movie.title}
+      />
 
-      {/* Content */}
-      <div className="px-6 py-4 text-center flex flex-col items-center">
+      {/* Card Content */}
+      <div className="px-5 pb-5">
         <h5
-          className={`font-semibold tracking-tight text-white truncate ${fontSize()}`}
+          className={`font-Raleway tracking-tight text-white text-center pt-3 pb-2 truncate ${calculateFontSize(
+            movie.title
+          )}`}
         >
           {movie.title}
         </h5>
-        <p className="text-sm text-gray-400 mt-1">{movie.release_date}</p>
 
-        {/* Rating */}
-        <div className="flex items-center justify-center gap-2 mt-4">
-          <span className="text-yellow-500 text-sm font-medium">Rated:</span>
-          <span className="bg-yellow-400 text-black text-sm font-bold px-2.5 py-1 rounded-full w-[45px] flex justify-center items-center shadow-sm">
+        <p className="font-inter text-sm text-center text-gray-400">
+          {movie.release_date}
+        </p>
+
+        <div className="flex items-center mt-4 mb-2 justify-center gap-2">
+          <span className="text-yellow-500 text-sm font-inter">Rated:</span>
+          <span className="bg-yellow-200 text-black font-DM text-sm px-2.5 py-0.5 rounded w-[40px] h-[20px] flex items-center justify-center">
             {Number(movie.vote_average).toFixed(1)}
           </span>
         </div>
-
-        {/* Kind Footer Message */}
-        <p className="text-xs text-gray-500 italic mt-4">
-          “Thanks for watching with us.”
-        </p>
       </div>
     </div>
   );

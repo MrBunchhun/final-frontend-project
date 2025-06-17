@@ -54,7 +54,7 @@ const HomePage = () => {
   return (
     <main className="w-full">
       {/* Banner */}
-      <section className="pt-1 pb-6 sm:pt-1 sm:pb-8">
+      <section className="pt-1 pb-1 sm:pt-1 sm:pb-1">
         {topRatedMovie.length === 0 ? (
           <SkeletonBanner />
         ) : (

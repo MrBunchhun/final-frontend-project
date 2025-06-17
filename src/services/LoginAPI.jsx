@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Set base URL for your Laravel API
 const API = axios.create({
-  baseURL: "http://localhost:8000/api", // Change to match your Laravel setup
+  baseURL: "https://final-information-production.up.railway.app/api", // Change to match your Laravel setup
 });
 
 API.interceptors.request.use((config) => {

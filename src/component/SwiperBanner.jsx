@@ -5,7 +5,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import SlideBanner from "./SlideBanner";
 
 const SwiperBanner = ({ images }) => (
-  <div className="w-full" style={{ height: "60vh", position: "relative" }}>
+  <div className="w-full" style={{ height: "70vh", position: "relative" }}>
     <Swiper
       spaceBetween={30}
       centeredSlides

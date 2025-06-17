@@ -1,6 +1,6 @@
 const SlideBanner = ({ image }) => {
   return (
-    <div className="relative w-full overflow-hidden rounded-lg" style={{ height: "70vh", minHeight: "300px" }}>
+    <div className="relative w-full overflow-hidden rounded-lg" style={{ height: "80vh", minHeight: "300px" }}>
       {/* Background Image */}
       <img
         className="absolute top-1/2 left-1/2 w-full h-full object-cover -translate-x-1/2 -translate-y-1/2"

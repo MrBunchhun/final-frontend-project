@@ -80,7 +80,6 @@ const MovieDetail = () => {
             {movie.overview}
           </p>
 
-          {/* ▶ Trailer + ❤️ Save Buttons */}
           <div className="flex flex-wrap gap-4 mt-4">
             <button
               onClick={async () => {
@@ -92,7 +91,7 @@ const MovieDetail = () => {
                   alert("Trailer not available");
                 }
               }}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition"
+              className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md transition"
             >
               ▶ Watch Trailer
             </button>
@@ -113,7 +112,7 @@ const MovieDetail = () => {
               onClick={handleToggleFavorite}
               className="bg-white hover:bg-gray-200 text-black px-4 py-2 rounded-md transition"
             >
-              ❤️ Save to Favorites
+              ⭐️ Save to Favorites
             </button>
           </div>
 

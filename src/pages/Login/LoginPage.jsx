@@ -4,7 +4,6 @@ import { profileStore } from "../../store/profileStore";
 import { request } from "../../util/request";
 import ErrorMessage from "../../component/ErrorMessage";
 
-
 const LoginPage = () => {
   const navigate = useNavigate();
   const { funLogin } = profileStore();
@@ -40,7 +39,10 @@ const LoginPage = () => {
     );
 
     const receiveMessage = (event) => {
-      if (event.origin !== "https://final-information-production.up.railway.app") return;
+      if (
+        event.origin !== "https://final-information-production.up.railway.app"
+      )
+        return;
 
       const { user, token } = event.data || {};
       if (user && token) {
@@ -63,21 +65,22 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-[#131313] flex items-center justify-center px-4">
-      <div className="bg-[#1c1c1e] w-full max-w-sm p-8 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold text-white text-center mb-6">
-          Login
+      <div className="bg-[#1c1c1e] w-full max-w-md p-8 rounded-2xl shadow-xl border border-gray-800">
+        <h2 className="text-3xl font-bold text-white text-center mb-8">
+          Welcome Back
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="Email"
+            placeholder="Email Address"
             required
-            className="w-full px-4 py-2 rounded bg-[#2c2c2e] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-4 py-2 rounded-lg bg-[#2c2c2e] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
+
           <input
             type="password"
             name="password"
@@ -85,55 +88,34 @@ const LoginPage = () => {
             onChange={handleChange}
             placeholder="Password"
             required
-            className="w-full px-4 py-2 rounded bg-[#2c2c2e] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-4 py-2 rounded-lg bg-[#2c2c2e] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
 
           {error && <ErrorMessage message={error} />}
 
           <button
             type="submit"
-            className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded transition"
+            className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg font-medium transition duration-200"
           >
             Login
           </button>
 
-          {/* 🆕 Add Forgot Password Link here */}
-          <p className="text-center text-sm text-gray-400 mt-2">
+          <div className="text-center mt-2">
             <button
               type="button"
               onClick={() => navigate("/forgot-password")}
-              className="text-blue-400 hover:underline"
+              className="text-sm text-blue-400 hover:underline"
             >
               Forgot Password?
             </button>
-          </p>
+          </div>
         </form>
-
-        <div className="flex items-center my-6">
-          <hr className="flex-1 border-gray-600" />
-          <span className="px-3 text-sm text-gray-400">or</span>
-          <hr className="flex-1 border-gray-600" />
-        </div>
-
-        <button
-          onClick={() => handleSocialLogin("google")}
-          className="w-full mb-3 bg-white text-black py-2 rounded hover:bg-gray-100 transition"
-        >
-          Continue with Google
-        </button>
-
-        <button
-          onClick={() => handleSocialLogin("github")}
-          className="w-full bg-[#1f2a3a] text-white py-2 rounded hover:bg-[#1a2633] transition"
-        >
-          Continue with GitHub
-        </button>
 
         <p className="text-sm text-center text-gray-400 mt-6">
           Don’t have an account?{" "}
           <button
             onClick={() => navigate("/register")}
-            className="text-red-500 hover:underline"
+            className="text-yellow-400 hover:underline"
           >
             Register
           </button>

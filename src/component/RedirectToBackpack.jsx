@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const RedirectToBackpack = () => {
   useEffect(() => {
-    window.location.href = "https://final-information-production.up.railway.app/admin";
+    window.location.href = "https://final-information-production.up.railway.app/admin/login";
   }, []);
 
   return (
